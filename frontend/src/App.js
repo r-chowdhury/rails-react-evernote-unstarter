@@ -15,7 +15,7 @@ class App extends Component {
       noteList: [],
       toggleCreateNote: false,
       newFormTitle: "",
-      newFormContent: ""
+      newFormContent: "",
     }
   }
 
@@ -30,28 +30,40 @@ class App extends Component {
       })
   }
 
-  handleCreateNoteForm = e => {
-    e.preventDefault()
-    console.log(e.target[0].value)
+  handleNoteData = (title, content, user_id) => {
+    fetch("http://localhost:3000/api/v1/notes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        note: {
+          title,
+          content,
+          user_id
+        }
+      })
+    })
+
+    this.setState({
+      noteList: [...this.state.noteList, {title, content, user_id} ]
+    })
   }
+
 
   handleCreateNoteClick = e => {
     this.setState({
       toggleCreateNote: true
+
     })
   }
 
   render() {
     if (this.state.toggleCreateNote) {
-      //if toggleCreateNote is false, render note list with
-      //button
-
-      //if toggleCreateNote is true, render note list
-      //with form itself.
       return (
         <div>
           <NoteList noteList={this.state.noteList}  />
-          <CreateNewNote handleCreateNoteForm={this.handleCreateNoteForm}/>
+          <CreateNewNote handleNoteData={this.handleNoteData}/>
         </div>
       );
     } else {

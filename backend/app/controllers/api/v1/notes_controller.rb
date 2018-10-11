@@ -7,9 +7,7 @@ class Api::V1::NotesController < ApplicationController
 
 
   def create
-    byebug
-    note = Note.new(note_params)
-
+    note = Note.new(user_id: note_params[:user_id], title: note_params[:title], content: note_params[:content])
     if note.valid?
       note.save
       render json: {success: true}
@@ -32,6 +30,6 @@ class Api::V1::NotesController < ApplicationController
 
   private
   def note_params
-    params.require(:notes).permit(:user_id, :title, :content)
+    params.require(:note).permit(:user_id, :title, :content)
   end
 end
