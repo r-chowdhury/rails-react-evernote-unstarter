@@ -3,6 +3,7 @@ import './App.css';
 import NoteList from "./components/NoteList"
 import CreateNewNote from "./components/forms/CreateNewNote"
 import CreateNoteButton from "./components/buttons/CreateNoteButton"
+import ButtonAppBar from "./components/ButtonAppBar"
 /*
 Components: Notes, NotesList
 
@@ -62,6 +63,7 @@ class App extends Component {
     if (this.state.toggleCreateNote) {
       return (
         <div>
+          <ButtonAppBar />
           <NoteList noteList={this.state.noteList}  />
           <CreateNewNote handleNoteData={this.handleNoteData}/>
         </div>
@@ -69,6 +71,7 @@ class App extends Component {
     } else {
       return (
         <div>
+          <ButtonAppBar />
           <NoteList noteList={this.state.noteList} />
           <CreateNoteButton handleCreateNoteClick={this.handleCreateNoteClick} />
         </div>
