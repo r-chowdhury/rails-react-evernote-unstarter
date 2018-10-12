@@ -61,9 +61,14 @@ class App extends Component {
   displayUserNotes = () => {
     return (
       <React.Fragment>
-        <NoteList noteList={this.state.noteList}  />
+        <NoteList noteList={this.state.noteList}  updateEntry={this.updateEntry}/>
       </React.Fragment>
     )
+  }
+
+  updateEntry = () => {
+    console.log("hello")
+    fetch("http://localhost:3000/notes")
   }
 
   render() {

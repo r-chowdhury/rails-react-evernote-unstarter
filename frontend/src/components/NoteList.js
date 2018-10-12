@@ -7,7 +7,7 @@ class NoteList extends React.Component {
 
   displayNote = (noteList) => {
     return noteList.map(note => {
-      return <Note note={note} />
+      return <Note note={note} updateEntry={this.props.updateEntry}/>
     })
   }
 

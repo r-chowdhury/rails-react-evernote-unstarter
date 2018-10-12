@@ -6,6 +6,8 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import EditIcon from '@material-ui/icons/Edit';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -27,7 +29,11 @@ const SimpleExpansionPanel = (props) => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Typography>
-            <i>{props.note.content}</i>
+            <i>{props.note.content}</i><br></br><br></br>
+              <Button variant="contained" color="default" className={classes.button} onClick={props.updateEntry}>
+                Edit Your Entry
+                <EditIcon className={classes.rightIcon} />
+              </Button>
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
