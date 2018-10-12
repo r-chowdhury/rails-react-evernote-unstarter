@@ -23,11 +23,6 @@ const styles = {
 };
 
 const ButtonAppBar = (props) => {
-  const activateModal = () => {
-    return (
-      <LoginModal />
-    )
-  }
 
 
   const { classes } = props;
@@ -41,7 +36,7 @@ const ButtonAppBar = (props) => {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             User's Journal
           </Typography>
-          <Button color="inherit" onClick={activateModal}> Login </Button>
+          <LoginModal />
         </Toolbar>
       </AppBar>
     </div>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-const CreateNoteButton = (props) => {
+const NewNoteButton = (props) => {
   return (
     <div onClick={props.handleCreateNoteClick}>
       <Button variant="contained" color="primary" className={props.button}>
@@ -13,4 +13,4 @@ const CreateNoteButton = (props) => {
   )
 }
 
-export default CreateNoteButton
+export default NewNoteButton

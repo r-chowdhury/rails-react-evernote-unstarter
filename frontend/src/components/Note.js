@@ -6,18 +6,28 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
-const Note = (props) => {
-  return (
+class Note extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      toggleNoteTitle: false
+    }
+  }
+
+
+
+  render() {
+    return (
       <List component="nav">
         <ListItem button>
-          <ListItemText primary={props.note.title} />
+          <ListItemText primary={this.props.note.title} />
           <ul className="left">
-            <li>{props.note.content}</li>
+            <li>{this.props.note.content}</li>
           </ul>
         </ListItem>
         <Divider />
     </List>
-  )
+  )}
 }
 
 export default Note

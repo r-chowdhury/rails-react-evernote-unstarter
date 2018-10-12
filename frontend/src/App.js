@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import NoteList from "./components/NoteList"
-import CreateNewNote from "./components/forms/CreateNewNote"
-import CreateNoteButton from "./components/buttons/CreateNoteButton"
+import NewNoteForm from "./components/forms/NewNoteForm"
+import NewNoteButton from "./components/buttons/NewNoteButton"
 import ButtonAppBar from "./components/ButtonAppBar"
 /*
 Components: Notes, NotesList
@@ -17,6 +17,7 @@ class App extends Component {
       toggleCreateNote: false,
       newFormTitle: "",
       newFormContent: "",
+      toggleSignUp: false
     }
   }
 
@@ -45,35 +46,41 @@ class App extends Component {
         }
       })
     })
-
     this.setState({
-      noteList: [...this.state.noteList, {title, content, user_id} ]
+      noteList: [...this.state.noteList, {title, content, user_id} ],
     })
   }
 
 
-  handleCreateNoteClick = e => {
+  handleCreateNoteClick = () => {
     this.setState({
       toggleCreateNote: true
-
     })
+  }
+
+  displayUserNotes = () => {
+    return (
+      <React.Fragment>
+        <NoteList noteList={this.state.noteList}  />
+      </React.Fragment>
+    )
   }
 
   render() {
-    if (this.state.toggleCreateNote) {
+    if (this.state.toggleCreateNote === true) {
       return (
         <div>
           <ButtonAppBar />
-          <NoteList noteList={this.state.noteList}  />
-          <CreateNewNote handleNoteData={this.handleNoteData}/>
+          {this.displayUserNotes()}
+          <NewNoteForm handleNoteData={this.handleNoteData}/>
         </div>
-      );
+      )
     } else {
       return (
         <div>
           <ButtonAppBar />
-          <NoteList noteList={this.state.noteList} />
-          <CreateNoteButton handleCreateNoteClick={this.handleCreateNoteClick} />
+          {this.displayUserNotes()}
+          <NewNoteButton handleCreateNoteClick={this.handleCreateNoteClick}/>
         </div>
       )
     }
