@@ -18,7 +18,6 @@ class Api::V1::NotesController < ApplicationController
 
   def update
     note = Note.find(params[:id])
-
     note.update(user_id: note_params[:user_id], title: note_params[:title], content: note_params[:content])
 
     if note.valid?

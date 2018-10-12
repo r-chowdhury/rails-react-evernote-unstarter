@@ -66,9 +66,8 @@ class App extends Component {
     )
   }
 
-  updateEntry = () => {
-    console.log("hello")
-    fetch("http://localhost:3000/notes")
+  updateEntry = (id) => {
+    //fetch(`http://localhost:3000/note/${id}`)
   }
 
   render() {
