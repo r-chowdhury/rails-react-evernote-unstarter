@@ -1,33 +1,42 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-class Note extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      toggleNoteTitle: false
-    }
-  }
+const styles = theme => ({
+  root: {
+    width: '100%',
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
+});
 
-
-
-  render() {
-    return (
-      <List component="nav">
-        <ListItem button>
-          <ListItemText primary={this.props.note.title} />
-          <ul className="left">
-            <li>{this.props.note.content}</li>
-          </ul>
-        </ListItem>
-        <Divider />
-    </List>
-  )}
+const SimpleExpansionPanel = (props) => {
+  const { classes } = props;
+  return (
+    <div className={classes.root}>
+      <ExpansionPanel>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography className={classes.heading}><strong>{props.note.title}</strong></Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <Typography>
+            <i>{props.note.content}</i>
+          </Typography>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </div>
+  );
 }
 
-export default Note
+SimpleExpansionPanel.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(SimpleExpansionPanel);
