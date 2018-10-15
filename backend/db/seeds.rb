@@ -10,3 +10,6 @@ Note.delete_all
 ryhan = User.create(name: "Ryhan")
 
 Note.create(title: "Example 1", content: "example content 1", user: ryhan)
+Note.create(title: "Example 2", content: "example content 2", user: ryhan)
+Note.create(title: "Example 3", content: "example content 3", user: ryhan)
+Note.create(title: "Example 4", content: "example content 4", user: ryhan)
