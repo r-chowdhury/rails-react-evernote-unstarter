@@ -23,13 +23,14 @@ const styles = theme => ({
   },
 });
 
-class SimpleExpansionPanel extends React.Component {
-  constructor() {
-    super()
+class Note extends React.Component {
+  constructor(props) {
+    super(props)
     this.state = {
       toggleEditButton: false,
-      changedTitle: "",
-      changedContent: ""
+      title: this.props.note.title,
+      content: this.props.note.content,
+      updateComplete: false
     }
   }
 
@@ -45,15 +46,31 @@ class SimpleExpansionPanel extends React.Component {
     })
   }
 
-  handleUpdateSubmit = e => {
+  handleUpdateSubmit = (e, id) => {
     e.preventDefault()
-    console.log(e)
+    return fetch(`http://localhost:3000/api/v1/notes/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        note: {
+          title: this.state.title,
+          content: this.state.content,
+        }
+      })
+    })
+    .then(this.setState({
+      toggleEditButton: !this.state.toggleEditButton
+      }))
+    .then(this.props.updateEntryInState(this.state.title, this.state.content, id))
   }
 
   contentRender = () => {
     if (this.state.toggleEditButton) { //if toggled, show form
       return (
-        <form className={this.props.container} noValidate onSubmit={this.handleUpdateSubmit}>
+        <form className={this.props.container} noValidate onSubmit={e => this.handleUpdateSubmit(e, this.props.note.id)}>
           <div className="left">
             <TextField
               label="Title"
@@ -84,7 +101,7 @@ class SimpleExpansionPanel extends React.Component {
           </Button>
         </form>
       )
-    } else { //if not, then show edit button
+    } else if (!this.state.toggleEditButton){ //if not, then show edit button
       return (
         <React.Fragment>
           <i>{this.props.note.content}</i><br></br><br></br>
@@ -116,8 +133,8 @@ class SimpleExpansionPanel extends React.Component {
   }
 }
 
-SimpleExpansionPanel.propTypes = {
+Note.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleExpansionPanel);
+export default withStyles(styles)(Note);

@@ -21,6 +21,26 @@ class App extends Component {
     }
   }
 
+  updateEntryInState = (title, content, id) => {
+    let y = this.state.noteList.map(note => {
+      if (note.id === id) {
+        return {
+          title: title,
+          content: content,
+          id: id
+        }
+      } else {
+        return note
+      }
+    })
+
+    this.setState({
+      noteList: y
+    })
+
+
+
+  }
 
   componentDidMount = () => {
     fetch("http://localhost:3000/api/v1/notes")
@@ -29,7 +49,7 @@ class App extends Component {
         this.setState({
           noteList: data
         })
-      })
+      console.log(data)})
   }
 
   handleNoteData = (title, content, user_id) => {
@@ -42,7 +62,8 @@ class App extends Component {
         note: {
           title,
           content,
-          user_id
+          user_id,
+
         }
       })
     })
@@ -61,14 +82,11 @@ class App extends Component {
   displayUserNotes = () => {
     return (
       <React.Fragment>
-        <NoteList noteList={this.state.noteList}  updateEntry={this.updateEntry}/>
+        <NoteList noteList={this.state.noteList}  updateEntryInState={this.updateEntryInState}/>
       </React.Fragment>
     )
-  }
+  } 
 
-  updateEntry = (id) => {
-    //fetch(`http://localhost:3000/note/${id}`)
-  }
 
   render() {
     if (this.state.toggleCreateNote === true) {
@@ -92,23 +110,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-
-
-
-
-// fetch("http://localhost:3000/api/v1/notes", {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify({
-//     note: {
-//       user,
-//       title,
-//       content
-//     }
-//   })
-// })

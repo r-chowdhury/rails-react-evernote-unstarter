@@ -2,7 +2,7 @@ class Api::V1::NotesController < ApplicationController
 
   def index
     notes = Note.all
-    render json: notes
+    render json: notes.order(:id)
   end
 
 
@@ -18,8 +18,7 @@ class Api::V1::NotesController < ApplicationController
 
   def update
     note = Note.find(params[:id])
-    note.update(user_id: note_params[:user_id], title: note_params[:title], content: note_params[:content])
-
+    note.update(title: note_params[:title],  content: note_params[:content])
     if note.valid?
       render json: {success: true}
     else
@@ -31,4 +30,5 @@ class Api::V1::NotesController < ApplicationController
   def note_params
     params.require(:note).permit(:user_id, :title, :content)
   end
+
 end
