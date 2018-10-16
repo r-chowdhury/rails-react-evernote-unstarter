@@ -3,7 +3,9 @@ import './App.css';
 import NoteList from "./components/NoteList"
 import NewNoteForm from "./components/forms/NewNoteForm"
 import NewNoteButton from "./components/buttons/NewNoteButton"
+import HomePage from "./components/HomePage"
 import ButtonAppBar from "./components/ButtonAppBar"
+import SignUpPage from "./components/forms/SignUpPage"
 /*
 Components: Notes, NotesList
 
@@ -17,7 +19,8 @@ class App extends Component {
       toggleCreateNote: false,
       newFormTitle: "",
       newFormContent: "",
-      toggleSignUp: false
+      toggleSignUp: false,
+      userLoggedIn: false
     }
   }
 
@@ -87,9 +90,29 @@ class App extends Component {
     )
   } 
 
+  handleLogin = () => {
+    this.setState({
+      userLoggedIn: !this.state.userLoggedIn
+    })
+  }
+
+  handleSignUp = () => {
+    this.setState({
+      toggleSignUp: !this.state.toggleSignUp
+    })
+  }
+
 
   render() {
-    if (this.state.toggleCreateNote === true) {
+    if (this.state.userLoggedIn === false && this.state.toggleSignUp === false) {
+      return (
+        <HomePage handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>
+        )
+      } else if (this.state.toggleSignUp === true && this.state.userLoggedIn === false) {   
+        return (
+          <SignUpPage />
+        )
+      } else if (this.state.toggleCreateNote === true && this.state.userLoggedIn === true) {
       return (
         <div>
           <ButtonAppBar />
@@ -97,7 +120,7 @@ class App extends Component {
           <NewNoteForm handleNoteData={this.handleNoteData}/>
         </div>
       )
-    } else {
+    } else if (this.state.userLoggedIn === true && this.state.toggleCreateNote === false ){
       return (
         <div>
           <ButtonAppBar />

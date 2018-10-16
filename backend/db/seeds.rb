@@ -7,9 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.delete_all
 Note.delete_all
-ryhan = User.create(name: "Ryhan")
+ryhan = User.create(email: "ryhan@email.com", password: "ryhan123")
+kenny = User.create(email: "kenny@email.com", password: "kenny123")
+nancy = User.create(email: "nancy@email.com", password: "nancy123")
+humzah = User.create(email: "humzah@email.com", password: "humzah123")
 
 Note.create(title: "Example 1", content: "example content 1", user: ryhan)
 Note.create(title: "Example 2", content: "example content 2", user: ryhan)
-Note.create(title: "Example 3", content: "example content 3", user: ryhan)
-Note.create(title: "Example 4", content: "example content 4", user: ryhan)
+Note.create(title: "Example 3", content: "example content 3", user: nancy)
+Note.create(title: "Example 4", content: "example content 4", user: kenny)
