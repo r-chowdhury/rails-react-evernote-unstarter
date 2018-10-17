@@ -6,6 +6,7 @@ import NewNoteButton from "./components/buttons/NewNoteButton"
 import HomePage from "./components/HomePage"
 import ButtonAppBar from "./components/ButtonAppBar"
 import SignUpPage from "./components/forms/SignUpPage"
+import LoginPage from "./components/forms/LoginPage"
 /*
 Components: Notes, NotesList
 
@@ -20,7 +21,8 @@ class App extends Component {
       newFormTitle: "",
       newFormContent: "",
       toggleSignUp: false,
-      userLoggedIn: false
+      userLoggedIn: false,
+      toggleLogin: false
     }
   }
 
@@ -46,7 +48,12 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    fetch("http://localhost:3000/api/v1/notes")
+    fetch("http://localhost:3000/api/v1/notes", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${localStorage.token}`
+  }
+    })
       .then(resp => resp.json())
       .then(data => {
         this.setState({
@@ -75,10 +82,18 @@ class App extends Component {
     })
   }
 
+  signUpSuccessful = () => {
+    debugger
+    this.setState({
+      toggleSignUp: !this.state.toggleSignUp,
+      userLoggedIn: !this.state.userLoggedIn
+    })
+  }
+
 
   handleCreateNoteClick = () => {
     this.setState({
-      toggleCreateNote: true
+      toggleCreateNote: true,
     })
   }
 
@@ -90,29 +105,42 @@ class App extends Component {
     )
   } 
 
-  handleLogin = () => {
-    this.setState({
-      userLoggedIn: !this.state.userLoggedIn
-    })
-  }
-
   handleSignUp = () => {
     this.setState({
       toggleSignUp: !this.state.toggleSignUp
     })
   }
 
+  handleLogin = () => {
+    this.setState({
+      toggleLogin: !this.state.toggleLogin
+    }, console.log("hi"))
+    
+  }
+
+  changeLoginState = () => {
+    this.setState({
+      userLoggedIn: !this.state.userLoggedIn,
+      toggleLogin: !this.state.toggleLogin
+    })
+    console.log(this.state)
+  }
+
 
   render() {
-    if (this.state.userLoggedIn === false && this.state.toggleSignUp === false) {
+    if (this.state.toggleLogin === false && this.state.toggleSignUp === false && this.state.userLoggedIn === false) { //if user neither logged in nor signed up
       return (
         <HomePage handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>
         )
-      } else if (this.state.toggleSignUp === true && this.state.userLoggedIn === false) {   
+      } else if (this.state.toggleSignUp === true) {   //if user clicks SignUp
         return (
-          <SignUpPage />
+          <SignUpPage signUpSuccessful={this.signUpSuccessful}/>
         )
-      } else if (this.state.toggleCreateNote === true && this.state.userLoggedIn === true) {
+      } else if (this.state.toggleLogin === true) {
+        return (
+          <LoginPage changeLoginState={this.changeLoginState}/>
+        )
+      } else if (this.state.toggleCreateNote === true && this.state.userLoggedIn === true) { //if User is signed in
       return (
         <div>
           <ButtonAppBar />
@@ -120,7 +148,7 @@ class App extends Component {
           <NewNoteForm handleNoteData={this.handleNoteData}/>
         </div>
       )
-    } else if (this.state.userLoggedIn === true && this.state.toggleCreateNote === false ){
+      } else if (this.state.userLoggedIn === true && this.state.toggleCreateNote === false ){ //if User is Signed in
       return (
         <div>
           <ButtonAppBar />
