@@ -68,6 +68,7 @@ function LoginPage(props) {
       .then(data_with_token => {
         console.log(data_with_token)
         if (!!data_with_token.jwt) {
+          localStorage.user_id = data_with_token.user.id
           localStorage.token = data_with_token.jwt;
         } else {
           localStorage.token = "undefined"

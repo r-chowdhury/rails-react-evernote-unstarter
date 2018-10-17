@@ -47,12 +47,12 @@ class Note extends React.Component {
   }
 
   handleUpdateSubmit = (e, id) => {
-    e.preventDefault()
     return fetch(`http://localhost:3000/api/v1/notes/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        "Accept": "application/json",
+        "Authorization": `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         note: {
@@ -105,7 +105,7 @@ class Note extends React.Component {
       return (
         <React.Fragment>
           <i>{this.props.note.content}</i><br></br><br></br>
-          <Button variant="contained" color="default" className={this.props.button} onClick={e => this.clickEditButton()}>
+          <Button variant="contained" color="default" type="button" className={this.props.button} onClick={e => this.clickEditButton()}>
             Edit Your Entry
             <EditIcon className={this.props.rightIcon} />
           </Button>

@@ -22,10 +22,27 @@ class App extends Component {
       newFormContent: "",
       toggleSignUp: false,
       userLoggedIn: false,
-      toggleLogin: false
+      toggleLogin: false,
+      currentUser: ""
     }
   }
 
+  componentDidMount = () => {
+    fetch("http://localhost:3000/api/v1/notes", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.token}`
+  }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        this.setState({
+          noteList: data
+        })
+      console.log(data)})
+  }
+  
   updateEntryInState = (title, content, id) => {
     let y = this.state.noteList.map(note => {
       if (note.id === id) {
@@ -47,27 +64,13 @@ class App extends Component {
 
   }
 
-  componentDidMount = () => {
-    fetch("http://localhost:3000/api/v1/notes", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.token}`
-  }
-    })
-      .then(resp => resp.json())
-      .then(data => {
-        this.setState({
-          noteList: data
-        })
-      console.log(data)})
-  }
 
   handleNoteData = (title, content, user_id) => {
     fetch("http://localhost:3000/api/v1/notes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         note: {
@@ -123,7 +126,6 @@ class App extends Component {
       userLoggedIn: !this.state.userLoggedIn,
       toggleLogin: !this.state.toggleLogin
     })
-    console.log(this.state)
   }
 
 

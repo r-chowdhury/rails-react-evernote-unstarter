@@ -6,7 +6,9 @@ class NoteList extends React.Component {
 
   displayNote = (noteList) => {
     return noteList.map(note => {
-      return <Note note={note} updateEntryInState={this.props.updateEntryInState}/>
+      if (parseInt(localStorage.user_id,10) === note.user_id) {
+        return <Note note={note} updateEntryInState={this.props.updateEntryInState}/>
+      }
     })
   }
 

@@ -12,7 +12,6 @@ class CreateNewNote extends Component {
     this.state = {
       title: "",
       content: "",
-      user_id: null
     }
   }
 
@@ -43,7 +42,7 @@ class CreateNewNote extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.handleNoteData(this.state.title, this.state.content, this.state.user_id)
+    this.props.handleNoteData(this.state.title, this.state.content, localStorage.user_id)
   }
 
   render()
@@ -72,16 +71,6 @@ class CreateNewNote extends Component {
             rowsMax="8"
             onChange={this.handleNoteChange}
             value={this.state.content}
-            />
-          <TextField
-            label="User_id"
-            type="text"
-            name="user_id"
-            className={this.props.textField}
-            margin="normal"
-            variant="outlined"
-            onChange={this.handleNoteChange}
-            value={this.state.user_id}
             />
         </div>
         <Button variant="contained" color="primary" label="Submit" type="submit">
