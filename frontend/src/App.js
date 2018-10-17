@@ -39,19 +39,8 @@ class App extends Component {
       .then(data => {
         this.setState({
           noteList: data
-        })
+        }, console.log)
       })
-
-    fetch("http://localhost:3000/api/v1/profile", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.token}`
-          },
-          body: JSON.stringify({
-            token: localStorage.token
-          })
-        })
     }
   
   updateEntryInState = (title, content, id, user_id) => {
@@ -142,7 +131,7 @@ class App extends Component {
 
 
   render() {
-    if (this.state.toggleLogin === false && this.state.toggleSignUp === false && this.state.userLoggedIn === false) { //if user neither logged in nor signed up
+    if (this.state.toggleLogin === false && this.state.toggleSignUp === false && !localStorage.token) { //if user neither logged in nor signed up
       return (
         <HomePage handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>
         )
@@ -154,7 +143,7 @@ class App extends Component {
         return (
           <LoginPage changeLoginState={this.changeLoginState}/>
         )
-      } else if (this.state.toggleCreateNote === true && this.state.userLoggedIn === true) { //if User is signed in
+      } else if (this.state.toggleCreateNote === true && !!localStorage.token) { //if User is signed in
       return (
         <div>
           <ButtonAppBar />
@@ -162,7 +151,7 @@ class App extends Component {
           <NewNoteForm handleNoteData={this.handleNoteData}/>
         </div>
       )
-      } else if (this.state.userLoggedIn === true && this.state.toggleCreateNote === false ){ //if User is Signed in
+    } else if (!!localStorage.token && this.state.toggleCreateNote === false ){ //if User is Signed in
       return (
         <div>
           <ButtonAppBar />
