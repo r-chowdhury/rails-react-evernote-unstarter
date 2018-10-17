@@ -33,29 +33,41 @@ class App extends Component {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${localStorage.token}`
-  }
+    }
     })
       .then(resp => resp.json())
       .then(data => {
         this.setState({
           noteList: data
         })
-      console.log(data)})
-  }
+      })
+
+    fetch("http://localhost:3000/api/v1/profile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.token}`
+          },
+          body: JSON.stringify({
+            token: localStorage.token
+          })
+        })
+    }
   
-  updateEntryInState = (title, content, id) => {
+  updateEntryInState = (title, content, id, user_id) => {
     let y = this.state.noteList.map(note => {
       if (note.id === id) {
         return {
           title: title,
           content: content,
-          id: id
+          id: id,
+          user_id: user_id
         }
       } else {
         return note
       }
     })
-
+    console.log(y)
     this.setState({
       noteList: y
     })

@@ -30,6 +30,7 @@ class Note extends React.Component {
       toggleEditButton: false,
       title: this.props.note.title,
       content: this.props.note.content,
+      user_id: this.props.note.user_id,
       updateComplete: false
     }
   }
@@ -61,10 +62,12 @@ class Note extends React.Component {
         }
       })
     })
+    .then(resp => resp.json())
+    .then(console.log)
     .then(this.setState({
       toggleEditButton: !this.state.toggleEditButton
       }))
-    .then(this.props.updateEntryInState(this.state.title, this.state.content, id))
+    .then(this.props.updateEntryInState(this.state.title, this.state.content, id, this.state.user_id))
   }
 
   contentRender = () => {

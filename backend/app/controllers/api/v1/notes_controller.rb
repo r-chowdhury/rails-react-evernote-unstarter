@@ -20,7 +20,7 @@ class Api::V1::NotesController < ApplicationController
     note = Note.find(params[:id])
     note.update(title: note_params[:title],  content: note_params[:content])
     if note.valid?
-      render json: {success: true}
+      render json: {note: note, success: true}
     else
       render json: {errors: note.errors}
     end
