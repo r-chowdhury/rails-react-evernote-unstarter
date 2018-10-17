@@ -51,6 +51,7 @@ class App extends Component {
     fetch("http://localhost:3000/api/v1/notes", {
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
         "Authorization": `Bearer ${localStorage.token}`
   }
     })
@@ -83,7 +84,6 @@ class App extends Component {
   }
 
   signUpSuccessful = () => {
-    debugger
     this.setState({
       toggleSignUp: !this.state.toggleSignUp,
       userLoggedIn: !this.state.userLoggedIn
