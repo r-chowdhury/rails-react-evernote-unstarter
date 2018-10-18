@@ -10,7 +10,7 @@ class Api::V1::NotesController < ApplicationController
     note = Note.new(user_id: note_params[:user_id], title: note_params[:title], content: note_params[:content])
     if note.valid?
       note.save
-      render json: {success: true}
+      render json: {note: note, success: true}
     else
       render json: {errors: note.errors}
     end

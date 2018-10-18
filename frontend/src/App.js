@@ -83,7 +83,8 @@ class App extends Component {
       })
     })
     this.setState({
-      noteList: [...this.state.noteList, {title, content, user_id} ],
+      noteList: [...this.state.noteList, {title, content, user_id}],
+      toggleCreateNote: !this.state.toggleCreateNote
     })
   }
 
@@ -97,7 +98,7 @@ class App extends Component {
 
   handleCreateNoteClick = () => {
     this.setState({
-      toggleCreateNote: true,
+      toggleCreateNote: !this.state.toggleCreateNote,
     })
   }
 
@@ -131,7 +132,18 @@ class App extends Component {
 
 
   render() {
-    if (this.state.toggleLogin === false && this.state.toggleSignUp === false && !localStorage.token) { //if user neither logged in nor signed up
+    debugger
+    if (!!localStorage.token && this.state.toggleCreateNote === false) { //if User is Signed in
+      debugger
+      return (
+        <div>
+          <ButtonAppBar />
+          {this.displayUserNotes()}
+          <NewNoteButton handleCreateNoteClick={this.handleCreateNoteClick} />
+        </div>
+      )
+    }
+      if (this.state.toggleLogin === false && this.state.toggleSignUp === false && !localStorage.token) { //if user neither logged in nor signed up
       return (
         <HomePage handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>
         )
@@ -144,6 +156,7 @@ class App extends Component {
           <LoginPage changeLoginState={this.changeLoginState}/>
         )
       } else if (this.state.toggleCreateNote === true && !!localStorage.token) { //if User is signed in
+      debugger
       return (
         <div>
           <ButtonAppBar />
@@ -151,15 +164,7 @@ class App extends Component {
           <NewNoteForm handleNoteData={this.handleNoteData}/>
         </div>
       )
-    } else if (!!localStorage.token && this.state.toggleCreateNote === false ){ //if User is Signed in
-      return (
-        <div>
-          <ButtonAppBar />
-          {this.displayUserNotes()}
-          <NewNoteButton handleCreateNoteClick={this.handleCreateNoteClick}/>
-        </div>
-      )
-    }
+    } 
   }
 }
 
